@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft IT Certifications – Subhajit Sarkar</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --gold:   #c9a84c;
+  --gold2:  #e8cc80;
+  --silver: #a8b5c8;
+  --ink:    #1a1e2e;
+  --muted:  #5a6278;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #1c1c28;
+  font-family: 'DM Sans', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+/* ─── Page navigation pills ─── */
+.nav {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 100;
+  display: flex; gap: 8px;
+  background: rgba(10,10,20,0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 40px;
+  padding: 8px 16px;
+  backdrop-filter: blur(12px);
+}
+.nav a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: #4a5a7a; text-decoration: none;
+  padding: 4px 10px; border-radius: 20px;
+  transition: all 0.2s;
+}
+.nav a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+
+/* ─── Cert page wrapper ─── */
+.cert-page {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 24px 40px;
+}
+
+/* ─── Certificate shell ─── */
+.cert {
+  width: 960px; max-width: 100%;
+  position: relative;
+  animation: emerge 0.9s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes emerge {
+  from { opacity:0; transform: translateY(32px) scale(0.98); }
+  to   { opacity:1; transform: translateY(0)    scale(1);    }
+}
+
+/* Outer shadow frame */
+.cert-frame {
+  position: relative;
+  border-radius: 6px;
+  padding: 3px;
+  box-shadow: 0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* Animated gradient border */
+.cert-frame::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 6px;
+  background: conic-gradient(from var(--angle, 0deg), var(--c1), var(--c2), var(--c1));
+  animation: rotateBorder 6s linear infinite;
+  z-index: -1;
+}
+@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes rotateBorder { to { --angle: 360deg; } }
+
+/* Paper */
+.cert-paper {
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Watermark layer ─── */
+.cert-paper::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,   transparent, transparent 29px, rgba(0,0,0,0.018) 30px),
+    repeating-linear-gradient(90deg,  transparent, transparent 29px, rgba(0,0,0,0.018) 30px);
+  pointer-events: none; z-index: 1;
+}
+
+/* ─── Holographic foil strip ─── */
+.holo-strip {
+  height: 5px;
+  background: linear-gradient(90deg,
+    #b8860b, #daa520, #ffd700, #fffacd, #daa520,
+    #b8860b, #c0c0c0, #e8e8e8, #daa520, #b8860b);
+  background-size: 300% 100%;
+  animation: holoShift 3s linear infinite;
+}
+@keyframes holoShift {
+  0%   { background-position:   0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* ─── Inner parchment ─── */
+.cert-inner {
+  padding: 52px 64px 44px;
+  position: relative;
+}
+
+/* ─── Corner filigree ─── */
+.filigree {
+  position: absolute; width: 72px; height: 72px; pointer-events: none; z-index: 2;
+}
+.filigree.tl { top: 10px;    left: 10px; }
+.filigree.tr { top: 10px;    right: 10px;   transform: scaleX(-1); }
+.filigree.bl { bottom: 10px; left: 10px;    transform: scaleY(-1); }
+.filigree.br { bottom: 10px; right: 10px;   transform: scale(-1);  }
+
+/* ─── Header ─── */
+.cert-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.org-left { display: flex; align-items: center; gap: 14px; }
+
+.ms-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+  width: 38px; height: 38px; flex-shrink: 0;
+}
+.ms-grid span { display: block; border-radius: 1px; }
+.ms-grid .r{background:#f25022;} .ms-grid .g{background:#7fba00;}
+.ms-grid .b{background:#00a4ef;} .ms-grid .y{background:#ffb900;}
+
+.org-text .org-name {
+  font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 17px;
+  letter-spacing: 0.5px;
+}
+.org-text .org-division {
+  font-size: 9px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase;
+  margin-top: 1px; opacity: 0.6;
+}
+
+.cert-number {
+  font-family: 'Fira Code', monospace; font-size: 10px; letter-spacing: 1px;
+  text-align: right; opacity: 0.45;
+  line-height: 1.8;
+}
+
+/* ─── Rule ─── */
+.rule-gold {
+  height: 1px; margin-bottom: 36px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, var(--gold2) 50%, var(--gold) 80%, transparent 100%);
+}
+
+/* ─── Body grid ─── */
+.body-grid {
+  display: grid; grid-template-columns: 1fr 200px; gap: 48px; align-items: start;
+}
+
+/* ─── Left ─── */
+.cert-type-line {
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 14px; opacity: 0.55;
+}
+
+.cert-heading {
+  font-family: 'Cinzel', serif; font-weight: 700;
+  font-size: 36px; line-height: 1.05;
+  margin-bottom: 6px; letter-spacing: 0.5px;
+}
+
+.cert-subheading {
+  font-family: 'EB Garamond', serif; font-style: italic;
+  font-size: 16px; margin-bottom: 30px; opacity: 0.55;
+}
+
+.awarded-row {
+  font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 6px; opacity: 0.4;
+}
+
+.recipient {
+  font-family: 'EB Garamond', serif; font-style: italic;
+  font-size: 46px; line-height: 1.05; margin-bottom: 22px;
+}
+
+.cert-desc {
+  font-family: 'EB Garamond', serif; font-size: 16px; line-height: 1.8;
+  max-width: 500px; opacity: 0.7; margin-bottom: 28px;
+}
+
+/* Skills */
+.skills-heading {
+  font-size: 8.5px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 10px; opacity: 0.35;
+}
+.skills-row {
+  display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 36px;
+}
+.stag {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  padding: 4px 12px; border-radius: 3px;
+  border-width: 1px; border-style: solid;
+}
+
+/* ─── Signature row ─── */
+.sig-row { display: flex; gap: 44px; align-items: flex-end; }
+.sig-block { display: flex; flex-direction: column; }
+.sig-name {
+  font-family: 'EB Garamond', serif; font-style: italic; font-size: 22px;
+  line-height: 1; margin-bottom: 5px;
+}
+.sig-underline { height: 1px; width: 150px; margin-bottom: 6px; }
+.sig-title { font-size: 8.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; }
+
+/* ─── Right panel ─── */
+.right-panel {
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  padding-top: 8px;
+}
+
+/* Medallion */
+.medallion { width: 150px; height: 150px; position: relative; }
+.medallion svg { width: 100%; height: 100%; }
+
+/* Info cards */
+.info-card {
+  width: 100%; border-radius: 6px; padding: 14px 16px; text-align: center;
+  border-width: 1px; border-style: solid;
+}
+.info-card .ic-label {
+  font-size: 7.5px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+  margin-bottom: 5px; opacity: 0.45;
+}
+.info-card .ic-value {
+  font-family: 'Cinzel', serif; font-size: 20px; font-weight: 600; line-height: 1;
+  margin-bottom: 2px;
+}
+.info-card .ic-sub { font-size: 9px; opacity: 0.35; }
+
+.seal-card {
+  width: 100%; border-radius: 6px; padding: 12px; text-align: center;
+  border-width: 1px; border-style: solid;
+}
+.seal-svg { width: 68px; height: 68px; margin: 0 auto 8px; display: block; }
+.seal-id {
+  font-family: 'Fira Code', monospace; font-size: 8px; letter-spacing: 0.5px;
+  opacity: 0.3; word-break: break-all;
+}
+
+/* ─── Footer ─── */
+.cert-footer {
+  margin-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 16px; border-top-width: 1px; border-top-style: solid;
+}
+.footer-left { font-family: 'Fira Code', monospace; font-size: 9px; letter-spacing: 0.5px; opacity: 0.3; }
+.footer-right { display: flex; align-items: center; gap: 6px; }
+.footer-dot { width: 6px; height: 6px; border-radius: 50%; }
+.fd-r{background:#f25022;} .fd-g{background:#7fba00;}
+.fd-b{background:#00a4ef;} .fd-y{background:#ffb900;}
+
+/* ─── THEME DEFINITIONS ─── */
+
+/* 1. Full Stack – Deep Navy/Gold */
+.t1 .cert-paper { background: linear-gradient(160deg, #f5f1eb 0%, #ede8df 60%, #f0ece4 100%); }
+.t1 .cert-frame { --c1: #c9a84c; --c2: #e8cc80; }
+.t1 .cert-type-line, .t1 .awarded-row, .t1 .sig-title, .t1 .skills-heading { color: #1a1e2e; }
+.t1 .cert-heading { color: #1a1e2e; }
+.t1 .cert-heading .hl { color: #0a5eb0; }
+.t1 .cert-subheading, .t1 .cert-desc { color: #1a1e2e; }
+.t1 .recipient { color: #0a5eb0; }
+.t1 .org-text .org-name { color: #1a1e2e; }
+.t1 .org-text .org-division { color: #1a1e2e; }
+.t1 .cert-number { color: #1a1e2e; }
+.t1 .rule-gold { background: linear-gradient(90deg, transparent, #c9a84c, #e8cc80, #c9a84c, transparent); }
+.t1 .stag { background: rgba(10,94,176,0.06); border-color: rgba(10,94,176,0.18); color: #0a5eb0; }
+.t1 .sig-name { color: #1a1e2e; }
+.t1 .sig-underline { background: rgba(10,94,176,0.25); }
+.t1 .info-card { background: rgba(10,94,176,0.05); border-color: rgba(10,94,176,0.15); }
+.t1 .ic-label, .t1 .ic-sub { color: #1a1e2e; }
+.t1 .ic-value { color: #0a5eb0; }
+.t1 .seal-card { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.2); }
+.t1 .seal-id { color: #1a1e2e; }
+.t1 .cert-footer { border-color: rgba(0,0,0,0.08); }
+.t1 .footer-left { color: #1a1e2e; }
+
+/* 2. Python – Dark Slate */
+.t2 .cert-paper { background: linear-gradient(160deg, #14141e 0%, #0e0e18 60%, #131320 100%); }
+.t2 .cert-frame { --c1: #7c3aed; --c2: #a78bfa; }
+.t2 .cert-type-line, .t2 .awarded-row, .t2 .sig-title, .t2 .skills-heading { color: #c4c9e2; }
+.t2 .cert-heading { color: #e8eaf6; }
+.t2 .cert-heading .hl { color: #a78bfa; }
+.t2 .cert-subheading, .t2 .cert-desc { color: #9298b8; }
+.t2 .recipient { color: #a78bfa; }
+.t2 .org-text .org-name { color: #e8eaf6; }
+.t2 .org-text .org-division { color: #9298b8; }
+.t2 .cert-number { color: #4a4e6a; }
+.t2 .rule-gold { background: linear-gradient(90deg, transparent, #7c3aed, #a78bfa, #7c3aed, transparent); }
+.t2 .stag { background: rgba(167,139,250,0.07); border-color: rgba(167,139,250,0.2); color: #a78bfa; }
+.t2 .sig-name { color: #e8eaf6; }
+.t2 .sig-underline { background: rgba(167,139,250,0.3); }
+.t2 .info-card { background: rgba(167,139,250,0.06); border-color: rgba(167,139,250,0.15); }
+.t2 .ic-label, .t2 .ic-sub { color: #9298b8; }
+.t2 .ic-value { color: #a78bfa; }
+.t2 .seal-card { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.2); }
+.t2 .seal-id { color: #4a4e6a; }
+.t2 .cert-footer { border-color: rgba(255,255,255,0.05); }
+.t2 .footer-left { color: #4a4e6a; }
+.t2 .ms-grid .r{opacity:0.7} .t2 .ms-grid .g{opacity:0.7}
+.t2 .ms-grid .b{opacity:0.7} .t2 .ms-grid .y{opacity:0.7}
+
+/* 3. Cybersecurity – Charcoal/Red */
+.t3 .cert-paper { background: linear-gradient(160deg, #0f0e0e 0%, #130d0d 60%, #100e0e 100%); }
+.t3 .cert-frame { --c1: #dc2626; --c2: #f87171; }
+.t3 .cert-type-line, .t3 .awarded-row, .t3 .sig-title, .t3 .skills-heading { color: #c8b8b8; }
+.t3 .cert-heading { color: #f5e8e8; }
+.t3 .cert-heading .hl { color: #ef4444; }
+.t3 .cert-subheading, .t3 .cert-desc { color: #8a7878; }
+.t3 .recipient { color: #f87171; }
+.t3 .org-text .org-name { color: #f5e8e8; }
+.t3 .org-text .org-division { color: #8a7878; }
+.t3 .cert-number { color: #3a2e2e; }
+.t3 .rule-gold { background: linear-gradient(90deg, transparent, #dc2626, #f87171, #dc2626, transparent); }
+.t3 .stag { background: rgba(239,68,68,0.07); border-color: rgba(239,68,68,0.2); color: #f87171; }
+.t3 .sig-name { color: #f5e8e8; }
+.t3 .sig-underline { background: rgba(239,68,68,0.3); }
+.t3 .info-card { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.15); }
+.t3 .ic-label, .t3 .ic-sub { color: #8a7878; }
+.t3 .ic-value { color: #f87171; }
+.t3 .seal-card { background: rgba(220,38,38,0.07); border-color: rgba(220,38,38,0.2); }
+.t3 .seal-id { color: #3a2e2e; }
+.t3 .cert-footer { border-color: rgba(255,255,255,0.05); }
+.t3 .footer-left { color: #3a2e2e; }
+
+/* 4. Cloud – Off-white/Teal */
+.t4 .cert-paper { background: linear-gradient(160deg, #f0f6f8 0%, #e8f2f5 60%, #eef5f7 100%); }
+.t4 .cert-frame { --c1: #0e7490; --c2: #22d3ee; }
+.t4 .cert-type-line, .t4 .awarded-row, .t4 .sig-title, .t4 .skills-heading { color: #1e3a4a; }
+.t4 .cert-heading { color: #0f2a38; }
+.t4 .cert-heading .hl { color: #0e7490; }
+.t4 .cert-subheading, .t4 .cert-desc { color: #2a5060; }
+.t4 .recipient { color: #0e7490; }
+.t4 .org-text .org-name { color: #0f2a38; }
+.t4 .org-text .org-division { color: #2a5060; }
+.t4 .cert-number { color: #1e3a4a; }
+.t4 .rule-gold { background: linear-gradient(90deg, transparent, #0e7490, #22d3ee, #0e7490, transparent); }
+.t4 .stag { background: rgba(14,116,144,0.07); border-color: rgba(14,116,144,0.2); color: #0e7490; }
+.t4 .sig-name { color: #0f2a38; }
+.t4 .sig-underline { background: rgba(14,116,144,0.3); }
+.t4 .info-card { background: rgba(14,116,144,0.05); border-color: rgba(14,116,144,0.15); }
+.t4 .ic-label, .t4 .ic-sub { color: #1e3a4a; }
+.t4 .ic-value { color: #0e7490; }
+.t4 .seal-card { background: rgba(14,116,144,0.05); border-color: rgba(14,116,144,0.2); }
+.t4 .seal-id { color: #1e3a4a; }
+.t4 .cert-footer { border-color: rgba(0,0,0,0.08); }
+.t4 .footer-left { color: #1e3a4a; }
+
+/* 5. Data Science – Deep Forest */
+.t5 .cert-paper { background: linear-gradient(160deg, #0a1208 0%, #0c1509 60%, #091108 100%); }
+.t5 .cert-frame { --c1: #16a34a; --c2: #4ade80; }
+.t5 .cert-type-line, .t5 .awarded-row, .t5 .sig-title, .t5 .skills-heading { color: #a8c8a0; }
+.t5 .cert-heading { color: #e8f5e4; }
+.t5 .cert-heading .hl { color: #4ade80; }
+.t5 .cert-subheading, .t5 .cert-desc { color: #6a9060; }
+.t5 .recipient { color: #4ade80; }
+.t5 .org-text .org-name { color: #e8f5e4; }
+.t5 .org-text .org-division { color: #6a9060; }
+.t5 .cert-number { color: #2a4020; }
+.t5 .rule-gold { background: linear-gradient(90deg, transparent, #16a34a, #4ade80, #16a34a, transparent); }
+.t5 .stag { background: rgba(74,222,128,0.07); border-color: rgba(74,222,128,0.18); color: #4ade80; }
+.t5 .sig-name { color: #e8f5e4; }
+.t5 .sig-underline { background: rgba(74,222,128,0.3); }
+.t5 .info-card { background: rgba(74,222,128,0.05); border-color: rgba(74,222,128,0.15); }
+.t5 .ic-label, .t5 .ic-sub { color: #6a9060; }
+.t5 .ic-value { color: #4ade80; }
+.t5 .seal-card { background: rgba(22,163,74,0.07); border-color: rgba(22,163,74,0.2); }
+.t5 .seal-id { color: #2a4020; }
+.t5 .cert-footer { border-color: rgba(255,255,255,0.05); }
+.t5 .footer-left { color: #2a4020; }
+
+/* 6. Mobile – Warm Cream/Amber */
+.t6 .cert-paper { background: linear-gradient(160deg, #fdf6ec 0%, #f9eedc 60%, #fdf4e8 100%); }
+.t6 .cert-frame { --c1: #d97706; --c2: #fbbf24; }
+.t6 .cert-type-line, .t6 .awarded-row, .t6 .sig-title, .t6 .skills-heading { color: #3a2800; }
+.t6 .cert-heading { color: #1e1200; }
+.t6 .cert-heading .hl { color: #b45309; }
+.t6 .cert-subheading, .t6 .cert-desc { color: #4a3010; }
+.t6 .recipient { color: #b45309; }
+.t6 .org-text .org-name { color: #1e1200; }
+.t6 .org-text .org-division { color: #4a3010; }
+.t6 .cert-number { color: #3a2800; }
+.t6 .rule-gold { background: linear-gradient(90deg, transparent, #d97706, #fbbf24, #d97706, transparent); }
+.t6 .stag { background: rgba(180,83,9,0.07); border-color: rgba(180,83,9,0.2); color: #b45309; }
+.t6 .sig-name { color: #1e1200; }
+.t6 .sig-underline { background: rgba(180,83,9,0.25); }
+.t6 .info-card { background: rgba(180,83,9,0.05); border-color: rgba(180,83,9,0.15); }
+.t6 .ic-label, .t6 .ic-sub { color: #3a2800; }
+.t6 .ic-value { color: #b45309; }
+.t6 .seal-card { background: rgba(217,119,6,0.06); border-color: rgba(217,119,6,0.2); }
+.t6 .seal-id { color: #3a2800; }
+.t6 .cert-footer { border-color: rgba(0,0,0,0.08); }
+.t6 .footer-left { color: #3a2800; }
+
+/* ─── Medallion glow ─── */
+@keyframes medalFloat {
+  0%,100% { transform: translateY(0); filter: drop-shadow(0 6px 20px var(--medal-glow)); }
+  50%      { transform: translateY(-6px); filter: drop-shadow(0 14px 28px var(--medal-glow)); }
+}
+.t1 { --medal-glow: rgba(10,94,176,0.4); }
+.t2 { --medal-glow: rgba(167,139,250,0.4); }
+.t3 { --medal-glow: rgba(239,68,68,0.4); }
+.t4 { --medal-glow: rgba(14,116,144,0.4); }
+.t5 { --medal-glow: rgba(74,222,128,0.4); }
+.t6 { --medal-glow: rgba(217,119,6,0.4); }
+.medallion { animation: medalFloat 4s ease-in-out infinite; }
+
+/* ─── Responsive ─── */
+@media(max-width:700px){
+  .body-grid { grid-template-columns: 1fr; }
+  .right-panel { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .medallion { width: 100px; height: 100px; }
+  .cert-inner { padding: 32px 24px 28px; }
+  .cert-heading { font-size: 26px; }
+  .recipient { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a href="#c1">Full Stack</a>
+  <a href="#c2">Python</a>
+  <a href="#c3">CyberSec</a>
+  <a href="#c4">Cloud</a>
+  <a href="#c5">Data&nbsp;AI</a>
+  <a href="#c6">Mobile</a>
+</nav>
+
+<!-- ════════════════════════════════════════════
+     CERT 1 — Full Stack Web Developer
+════════════════════════════════════════════ -->
+<div class="cert-page" id="c1">
+<div class="cert t1">
+  <div class="cert-frame">
+    <div class="cert-paper">
+      <div class="holo-strip"></div>
+      <div class="cert-inner">
+
+        <!-- Filigree corners -->
+        <svg class="filigree tl" viewBox="0 0 72 72" fill="none">
+          <path d="M4 68 L4 4 L68 4" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+          <path d="M4 52 L4 4 L52 4" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.4"/>
+          <path d="M4 36 L4 4 L36 4" stroke="#c9a84c" stroke-width="0.3" fill="none" opacity="0.25"/>
+          <circle cx="4" cy="4" r="3.5" fill="#c9a84c"/>
+          <circle cx="4" cy="4" r="6" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.3"/>
+          <path d="M18 4 L4 4 L4 18" stroke="#e8cc80" stroke-width="2" fill="none"/>
+        </svg>
+        <svg class="filigree tr" viewBox="0 0 72 72" fill="none">
+          <path d="M4 68 L4 4 L68 4" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+          <path d="M4 52 L4 4 L52 4" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.4"/>
+          <circle cx="4" cy="4" r="3.5" fill="#c9a84c"/>
+          <path d="M18 4 L4 4 L4 18" stroke="#e8cc80" stroke-width="2" fill="none"/>
+        </svg>
+        <svg class="filigree bl" viewBox="0 0 72 72" fill="none">
+          <path d="M4 68 L4 4 L68 4" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+          <path d="M4 52 L4 4 L52 4" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.4"/>
+          <circle cx="4" cy="4" r="3.5" fill="#c9a84c"/>
+          <path d="M18 4 L4 4 L4 18" stroke="#e8cc80" stroke-width="2" fill="none"/>
+        </svg>
+        <svg class="filigree br" viewBox="0 0 72 72" fill="none">
+          <path d="M4 68 L4 4 L68 4" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+          <path d="M4 52 L4 4 L52 4" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.4"/>
+          <circle cx="4" cy="4" r="3.5" fill="#c9a84c"/>
+          <path d="M18 4 L4 4 L4 18" stroke="#e8cc80" stroke-width="2" fill="none"/>
+        </svg>
+
+        <!-- Header -->
+        <div class="cert-header">
+          <div class="org-left">
+            <div class="ms-grid"><span class="r"></span><span class="g"></span><span class="b"></span><span class="y"></span></div>
+            <div class="org-text">
+              <div class="org-name">Microsoft</div>
+              <div class="org-division">Learn Certification Program</div>
+            </div>
+          </div>
+          <div class="cert-number">Certification No.<br>MS-FSD-2026-01-7891<br>Issued: 15 January 2026</div>
+        </div>
+
+        <div class="rule-gold"></div>
+
+        <div class="body-grid">
+          <div>
+            <div class="cert-type-line">Certificate of Professional Completion</div>
+            <div class="cert-heading">Full Stack<br><span class="hl">Web Developer</span></div>
+            <div class="cert-subheading">Microsoft Applied Skills — Development Track</div>
+            <div class="awarded-row">This certificate is proudly awarded to</div>
+            <div class="recipient">Subhajit Sarkar</div>
+            <p class="cert-desc">For demonstrating comprehensive mastery of full-stack web development, encompassing modern frontend engineering, scalable backend architecture, database design, REST API development, cloud deployment, and DevOps practices across the full software development lifecycle.</p>
+            <div class="skills-heading">Validated Competencies</div>
+            <div class="skills-row">
+              <span class="stag">React.js</span><span class="stag">Node.js</span>
+              <span class="stag">Python Flask</span><span class="stag">MongoDB</span>
+              <span class="stag">PostgreSQL</span><span class="stag">REST APIs</span>
+              <span class="stag">Docker</span><span class="stag">Azure Deploy</span>
+              <span class="stag">JWT Auth</span><span class="stag">CI / CD</span>
+            </div>
+            <div class="sig-row">
+              <div class="sig-block">
+                <div class="sig-name">Satya Nadella</div>
+                <div class="sig-underline"></div>
+                <div class="sig-title">Chief Executive Officer · Microsoft Corporation</div>
+              </div>
+              <div class="sig-block">
+                <div class="sig-name">Scott Guthrie</div>
+                <div class="sig-underline"></div>
+                <div class="sig-title">Executive VP · Cloud &amp; AI · Microsoft</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-panel">
+            <div class="medallion">
+              <svg viewBox="0 0 150 150" fill="none">
+                <defs>
+                  <radialGradient id="mg1" cx="50%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="#2a7de8"/><stop offset="100%" stop-color="#0a3a8a"/>
+                  </radialGradient>
+                  <filter id="glow1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <!-- rays -->
+                <circle cx="75" cy="75" r="68" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.4"/>
+                <circle cx="75" cy="75" r="60" stroke="#e8cc80" stroke-width="0.8" opacity="0.3"/>
+                <!-- outer ring -->
+                <circle cx="75" cy="75" r="56" fill="url(#mg1)" filter="url(#glow1)"/>
+                <circle cx="75" cy="75" r="56" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+                <circle cx="75" cy="75" r="48" stroke="rgba(232,204,128,0.3)" stroke-width="0.8" fill="none"/>
+                <!-- icon -->
+                <text x="75" y="72" text-anchor="middle" font-family="Fira Code" font-weight="700" font-size="22" fill="white">&lt;/&gt;</text>
+                <text x="75" y="90" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="7.5" fill="#e8cc80" letter-spacing="2">FULL STACK</text>
+                <text x="75" y="101" text-anchor="middle" font-family="Cinzel" font-weight="400" font-size="6.5" fill="rgba(232,204,128,0.6)" letter-spacing="2">DEVELOPER</text>
+                <!-- gold star dots -->
+                <circle cx="75" cy="22" r="3" fill="#e8cc80"/>
+                <circle cx="75" cy="128" r="3" fill="#e8cc80"/>
+                <circle cx="22" cy="75" r="3" fill="#e8cc80"/>
+                <circle cx="128" cy="75" r="3" fill="#e8cc80"/>
+              </svg>
+            </div>
+            <div class="info-card">
+              <div class="ic-label">Exam Score</div>
+              <div class="ic-value">94%</div>
+              <div class="ic-sub">Pass Threshold: 70%</div>
+            </div>
+            <div class="seal-card">
+              <svg class="seal-svg" viewBox="0 0 68 68" fill="none">
+                <circle cx="34" cy="34" r="32" stroke="#c9a84c" stroke-width="1.2"/>
+                <circle cx="34" cy="34" r="26" stroke="rgba(201,168,76,0.35)" stroke-width="0.7" stroke-dasharray="3 2"/>
+                <text x="34" y="30" text-anchor="middle" font-family="Cinzel" font-size="5.5" fill="#0a5eb0" letter-spacing="1.5">MICROSOFT</text>
+                <text x="34" y="39" text-anchor="middle" font-family="Cinzel" font-size="5" fill="#c9a84c" letter-spacing="1">CERTIFIED</text>
+                <text x="34" y="47" text-anchor="middle" font-family="DM Sans" font-size="4" fill="#888" letter-spacing="0.5">JAN 2026</text>
+              </svg>
+              <div class="seal-id">MS-FSD-2026-01-7891</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-footer">
+          <div class="footer-left">Issued: 15 January 2026 &nbsp;·&nbsp; Valid: 2 Years &nbsp;·&nbsp; learn.microsoft.com/verify &nbsp;·&nbsp; ID: MS-FSD-2026-01-7891</div>
+          <div class="footer-right"><div class="footer-dot fd-r"></div><div class="footer-dot fd-g"></div><div class="footer-dot fd-b"></div><div class="footer-dot fd-y"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CERT 2 — Python Developer
+════════════════════════════════════════════ -->
+<div class="cert-page" id="c2">
+<div class="cert t2">
+  <div class="cert-frame">
+    <div class="cert-paper">
+      <div class="holo-strip"></div>
+      <div class="cert-inner">
+        <svg class="filigree tl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#7c3aed" stroke-width="1.5" fill="none"/><path d="M4 52L4 4L52 4" stroke="#a78bfa" stroke-width="0.6" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3.5" fill="#7c3aed"/><path d="M18 4L4 4L4 18" stroke="#a78bfa" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree tr" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#7c3aed" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#7c3aed"/><path d="M18 4L4 4L4 18" stroke="#a78bfa" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree bl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#7c3aed" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#7c3aed"/><path d="M18 4L4 4L4 18" stroke="#a78bfa" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree br" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#7c3aed" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#7c3aed"/><path d="M18 4L4 4L4 18" stroke="#a78bfa" stroke-width="2" fill="none"/></svg>
+        <div class="cert-header">
+          <div class="org-left">
+            <div class="ms-grid"><span class="r"></span><span class="g"></span><span class="b"></span><span class="y"></span></div>
+            <div class="org-text"><div class="org-name">Microsoft</div><div class="org-division">Learn Certification Program</div></div>
+          </div>
+          <div class="cert-number">Certification No.<br>MS-PYD-2026-01-7892<br>Issued: 15 January 2026</div>
+        </div>
+        <div class="rule-gold"></div>
+        <div class="body-grid">
+          <div>
+            <div class="cert-type-line">Certificate of Professional Completion</div>
+            <div class="cert-heading">Python<br><span class="hl">Developer</span></div>
+            <div class="cert-subheading">Microsoft Applied Skills — Python Engineering Track</div>
+            <div class="awarded-row">This certificate is proudly awarded to</div>
+            <div class="recipient">Subhajit Sarkar</div>
+            <p class="cert-desc">For demonstrating advanced proficiency in Python software engineering, including backend development, data pipelines, API design, testing frameworks, and application of Python across automation, web services, and machine learning integration.</p>
+            <div class="skills-heading">Validated Competencies</div>
+            <div class="skills-row">
+              <span class="stag">Python 3.x</span><span class="stag">Django</span>
+              <span class="stag">FastAPI</span><span class="stag">Flask</span>
+              <span class="stag">NumPy / Pandas</span><span class="stag">Scikit-learn</span>
+              <span class="stag">SQLAlchemy</span><span class="stag">Celery</span>
+              <span class="stag">pytest</span><span class="stag">Docker</span>
+            </div>
+            <div class="sig-row">
+              <div class="sig-block"><div class="sig-name">Satya Nadella</div><div class="sig-underline"></div><div class="sig-title">Chief Executive Officer · Microsoft Corporation</div></div>
+              <div class="sig-block"><div class="sig-name">Scott Guthrie</div><div class="sig-underline"></div><div class="sig-title">Executive VP · Cloud &amp; AI · Microsoft</div></div>
+            </div>
+          </div>
+          <div class="right-panel">
+            <div class="medallion">
+              <svg viewBox="0 0 150 150" fill="none">
+                <defs><radialGradient id="mg2" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#3b0764"/></radialGradient></defs>
+                <circle cx="75" cy="75" r="68" stroke="#7c3aed" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.35"/>
+                <circle cx="75" cy="75" r="56" fill="url(#mg2)"/>
+                <circle cx="75" cy="75" r="56" stroke="#a78bfa" stroke-width="1.5" fill="none"/>
+                <circle cx="75" cy="75" r="48" stroke="rgba(167,139,250,0.25)" stroke-width="0.8" fill="none"/>
+                <text x="75" y="70" text-anchor="middle" font-family="Fira Code" font-weight="700" font-size="22" fill="white">Py</text>
+                <text x="75" y="88" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="7.5" fill="#a78bfa" letter-spacing="2">PYTHON</text>
+                <text x="75" y="99" text-anchor="middle" font-family="Cinzel" font-size="6.5" fill="rgba(167,139,250,0.6)" letter-spacing="2">DEVELOPER</text>
+                <circle cx="75" cy="22" r="3" fill="#a78bfa"/><circle cx="75" cy="128" r="3" fill="#a78bfa"/>
+                <circle cx="22" cy="75" r="3" fill="#a78bfa"/><circle cx="128" cy="75" r="3" fill="#a78bfa"/>
+              </svg>
+            </div>
+            <div class="info-card"><div class="ic-label">Exam Score</div><div class="ic-value">91%</div><div class="ic-sub">Pass Threshold: 70%</div></div>
+            <div class="seal-card">
+              <svg class="seal-svg" viewBox="0 0 68 68" fill="none">
+                <circle cx="34" cy="34" r="32" stroke="#7c3aed" stroke-width="1.2"/>
+                <circle cx="34" cy="34" r="26" stroke="rgba(124,58,237,0.3)" stroke-width="0.7" stroke-dasharray="3 2"/>
+                <text x="34" y="30" text-anchor="middle" font-family="Cinzel" font-size="5.5" fill="#a78bfa" letter-spacing="1.5">MICROSOFT</text>
+                <text x="34" y="39" text-anchor="middle" font-family="Cinzel" font-size="5" fill="#a78bfa" letter-spacing="1">CERTIFIED</text>
+                <text x="34" y="47" text-anchor="middle" font-family="DM Sans" font-size="4" fill="#666" letter-spacing="0.5">JAN 2026</text>
+              </svg>
+              <div class="seal-id">MS-PYD-2026-01-7892</div>
+            </div>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <div class="footer-left">Issued: 15 January 2026 &nbsp;·&nbsp; Valid: 2 Years &nbsp;·&nbsp; learn.microsoft.com/verify &nbsp;·&nbsp; ID: MS-PYD-2026-01-7892</div>
+          <div class="footer-right"><div class="footer-dot fd-r"></div><div class="footer-dot fd-g"></div><div class="footer-dot fd-b"></div><div class="footer-dot fd-y"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CERT 3 — Cybersecurity Analyst
+════════════════════════════════════════════ -->
+<div class="cert-page" id="c3">
+<div class="cert t3">
+  <div class="cert-frame">
+    <div class="cert-paper">
+      <div class="holo-strip"></div>
+      <div class="cert-inner">
+        <svg class="filigree tl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#dc2626" stroke-width="1.5" fill="none"/><path d="M4 52L4 4L52 4" stroke="#f87171" stroke-width="0.6" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3.5" fill="#dc2626"/><path d="M18 4L4 4L4 18" stroke="#f87171" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree tr" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#dc2626" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#dc2626"/><path d="M18 4L4 4L4 18" stroke="#f87171" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree bl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#dc2626" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#dc2626"/><path d="M18 4L4 4L4 18" stroke="#f87171" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree br" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#dc2626" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#dc2626"/><path d="M18 4L4 4L4 18" stroke="#f87171" stroke-width="2" fill="none"/></svg>
+        <div class="cert-header">
+          <div class="org-left">
+            <div class="ms-grid"><span class="r"></span><span class="g"></span><span class="b"></span><span class="y"></span></div>
+            <div class="org-text"><div class="org-name">Microsoft</div><div class="org-division">Security Certification Program</div></div>
+          </div>
+          <div class="cert-number">Certification No.<br>MS-CSA-2026-01-7893<br>Issued: 15 January 2026</div>
+        </div>
+        <div class="rule-gold"></div>
+        <div class="body-grid">
+          <div>
+            <div class="cert-type-line">Certificate of Professional Completion</div>
+            <div class="cert-heading">Cybersecurity<br><span class="hl">Analyst</span></div>
+            <div class="cert-subheading">Microsoft Security Skills — Ethical Hacking Track</div>
+            <div class="awarded-row">This certificate is proudly awarded to</div>
+            <div class="recipient">Subhajit Sarkar</div>
+            <p class="cert-desc">For demonstrating professional-level expertise in cybersecurity analysis, ethical penetration testing, vulnerability assessment, network security, SIEM operations, and responsible disclosure practices aligned with industry security standards.</p>
+            <div class="skills-heading">Validated Competencies</div>
+            <div class="skills-row">
+              <span class="stag">Penetration Testing</span><span class="stag">Kali Linux</span>
+              <span class="stag">Burp Suite</span><span class="stag">OWASP Top 10</span>
+              <span class="stag">Wireshark</span><span class="stag">Metasploit</span>
+              <span class="stag">SIEM / SOC</span><span class="stag">Nmap</span>
+              <span class="stag">Bug Bounty</span><span class="stag">CTF</span>
+            </div>
+            <div class="sig-row">
+              <div class="sig-block"><div class="sig-name">Satya Nadella</div><div class="sig-underline"></div><div class="sig-title">Chief Executive Officer · Microsoft Corporation</div></div>
+              <div class="sig-block"><div class="sig-name">Vasu Jakkal</div><div class="sig-underline"></div><div class="sig-title">CVP · Microsoft Security</div></div>
+            </div>
+          </div>
+          <div class="right-panel">
+            <div class="medallion">
+              <svg viewBox="0 0 150 150" fill="none">
+                <defs><radialGradient id="mg3" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#991b1b"/><stop offset="100%" stop-color="#450a0a"/></radialGradient></defs>
+                <circle cx="75" cy="75" r="68" stroke="#dc2626" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.35"/>
+                <circle cx="75" cy="75" r="56" fill="url(#mg3)"/>
+                <circle cx="75" cy="75" r="56" stroke="#f87171" stroke-width="1.5" fill="none"/>
+                <circle cx="75" cy="75" r="48" stroke="rgba(248,113,113,0.2)" stroke-width="0.8" fill="none"/>
+                <path d="M75 52 L90 59 L90 76 Q90 87 75 93 Q60 87 60 76 L60 59 Z" stroke="#f87171" stroke-width="1.5" fill="rgba(248,113,113,0.1)"/>
+                <path d="M68 75 L72 79 L82 68" stroke="#f87171" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <text x="75" y="103" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="7" fill="#f87171" letter-spacing="2">CYBERSEC</text>
+                <text x="75" y="113" text-anchor="middle" font-family="Cinzel" font-size="6" fill="rgba(248,113,113,0.5)" letter-spacing="1.5">ANALYST</text>
+                <circle cx="75" cy="22" r="3" fill="#f87171"/><circle cx="75" cy="128" r="3" fill="#f87171"/>
+                <circle cx="22" cy="75" r="3" fill="#f87171"/><circle cx="128" cy="75" r="3" fill="#f87171"/>
+              </svg>
+            </div>
+            <div class="info-card"><div class="ic-label">Exam Score</div><div class="ic-value">89%</div><div class="ic-sub">Pass Threshold: 70%</div></div>
+            <div class="seal-card">
+              <svg class="seal-svg" viewBox="0 0 68 68" fill="none">
+                <circle cx="34" cy="34" r="32" stroke="#dc2626" stroke-width="1.2"/>
+                <circle cx="34" cy="34" r="26" stroke="rgba(220,38,38,0.3)" stroke-width="0.7" stroke-dasharray="3 2"/>
+                <text x="34" y="30" text-anchor="middle" font-family="Cinzel" font-size="5.5" fill="#f87171" letter-spacing="1.5">MICROSOFT</text>
+                <text x="34" y="39" text-anchor="middle" font-family="Cinzel" font-size="5" fill="#f87171" letter-spacing="1">CERTIFIED</text>
+                <text x="34" y="47" text-anchor="middle" font-family="DM Sans" font-size="4" fill="#666" letter-spacing="0.5">JAN 2026</text>
+              </svg>
+              <div class="seal-id">MS-CSA-2026-01-7893</div>
+            </div>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <div class="footer-left">Issued: 15 January 2026 &nbsp;·&nbsp; Valid: 2 Years &nbsp;·&nbsp; learn.microsoft.com/verify &nbsp;·&nbsp; ID: MS-CSA-2026-01-7893</div>
+          <div class="footer-right"><div class="footer-dot fd-r"></div><div class="footer-dot fd-g"></div><div class="footer-dot fd-b"></div><div class="footer-dot fd-y"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CERT 4 — Cloud & DevOps Engineer
+════════════════════════════════════════════ -->
+<div class="cert-page" id="c4">
+<div class="cert t4">
+  <div class="cert-frame">
+    <div class="cert-paper">
+      <div class="holo-strip"></div>
+      <div class="cert-inner">
+        <svg class="filigree tl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#0e7490" stroke-width="1.5" fill="none"/><path d="M4 52L4 4L52 4" stroke="#22d3ee" stroke-width="0.6" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3.5" fill="#0e7490"/><path d="M18 4L4 4L4 18" stroke="#22d3ee" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree tr" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#0e7490" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#0e7490"/><path d="M18 4L4 4L4 18" stroke="#22d3ee" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree bl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#0e7490" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#0e7490"/><path d="M18 4L4 4L4 18" stroke="#22d3ee" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree br" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#0e7490" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#0e7490"/><path d="M18 4L4 4L4 18" stroke="#22d3ee" stroke-width="2" fill="none"/></svg>
+        <div class="cert-header">
+          <div class="org-left">
+            <div class="ms-grid"><span class="r"></span><span class="g"></span><span class="b"></span><span class="y"></span></div>
+            <div class="org-text"><div class="org-name">Microsoft</div><div class="org-division">Azure Certification Program</div></div>
+          </div>
+          <div class="cert-number">Certification No.<br>MS-CDE-2026-01-7894<br>Issued: 15 January 2026</div>
+        </div>
+        <div class="rule-gold"></div>
+        <div class="body-grid">
+          <div>
+            <div class="cert-type-line">Certificate of Professional Completion</div>
+            <div class="cert-heading">Cloud &amp; DevOps<br><span class="hl">Engineer</span></div>
+            <div class="cert-subheading">Microsoft Azure — Infrastructure &amp; DevOps Track</div>
+            <div class="awarded-row">This certificate is proudly awarded to</div>
+            <div class="recipient">Subhajit Sarkar</div>
+            <p class="cert-desc">For demonstrating expert-level knowledge in cloud infrastructure design, containerisation, orchestration, infrastructure-as-code, and modern DevOps pipelines across Microsoft Azure and multi-cloud environments.</p>
+            <div class="skills-heading">Validated Competencies</div>
+            <div class="skills-row">
+              <span class="stag">Microsoft Azure</span><span class="stag">AWS</span>
+              <span class="stag">Docker</span><span class="stag">Kubernetes</span>
+              <span class="stag">Terraform</span><span class="stag">GitHub Actions</span>
+              <span class="stag">CI / CD Pipelines</span><span class="stag">Linux Admin</span>
+              <span class="stag">Monitoring</span><span class="stag">IaC</span>
+            </div>
+            <div class="sig-row">
+              <div class="sig-block"><div class="sig-name">Satya Nadella</div><div class="sig-underline"></div><div class="sig-title">Chief Executive Officer · Microsoft Corporation</div></div>
+              <div class="sig-block"><div class="sig-name">Scott Guthrie</div><div class="sig-underline"></div><div class="sig-title">Executive VP · Cloud &amp; AI · Microsoft</div></div>
+            </div>
+          </div>
+          <div class="right-panel">
+            <div class="medallion">
+              <svg viewBox="0 0 150 150" fill="none">
+                <defs><radialGradient id="mg4" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#0e7490"/><stop offset="100%" stop-color="#083344"/></radialGradient></defs>
+                <circle cx="75" cy="75" r="68" stroke="#0e7490" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.35"/>
+                <circle cx="75" cy="75" r="56" fill="url(#mg4)"/>
+                <circle cx="75" cy="75" r="56" stroke="#22d3ee" stroke-width="1.5" fill="none"/>
+                <circle cx="75" cy="75" r="48" stroke="rgba(34,211,238,0.2)" stroke-width="0.8" fill="none"/>
+                <path d="M44 72 Q44 62 54 60 Q55 52 65 52 Q72 48 78 53 Q84 48 90 52 Q98 52 98 62 Q104 64 102 71 Q100 76 95 76 L52 76 Q46 76 44 72Z" stroke="#22d3ee" stroke-width="1.4" fill="rgba(34,211,238,0.1)"/>
+                <text x="75" y="98" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="7" fill="#22d3ee" letter-spacing="2">CLOUD / DEVOPS</text>
+                <text x="75" y="108" text-anchor="middle" font-family="Cinzel" font-size="6" fill="rgba(34,211,238,0.5)" letter-spacing="1.5">ENGINEER</text>
+                <circle cx="75" cy="22" r="3" fill="#22d3ee"/><circle cx="75" cy="128" r="3" fill="#22d3ee"/>
+                <circle cx="22" cy="75" r="3" fill="#22d3ee"/><circle cx="128" cy="75" r="3" fill="#22d3ee"/>
+              </svg>
+            </div>
+            <div class="info-card"><div class="ic-label">Exam Score</div><div class="ic-value">92%</div><div class="ic-sub">Pass Threshold: 70%</div></div>
+            <div class="seal-card">
+              <svg class="seal-svg" viewBox="0 0 68 68" fill="none">
+                <circle cx="34" cy="34" r="32" stroke="#0e7490" stroke-width="1.2"/>
+                <circle cx="34" cy="34" r="26" stroke="rgba(14,116,144,0.35)" stroke-width="0.7" stroke-dasharray="3 2"/>
+                <text x="34" y="30" text-anchor="middle" font-family="Cinzel" font-size="5.5" fill="#0e7490" letter-spacing="1.5">MICROSOFT</text>
+                <text x="34" y="39" text-anchor="middle" font-family="Cinzel" font-size="5" fill="#22d3ee" letter-spacing="1">CERTIFIED</text>
+                <text x="34" y="47" text-anchor="middle" font-family="DM Sans" font-size="4" fill="#666" letter-spacing="0.5">JAN 2026</text>
+              </svg>
+              <div class="seal-id">MS-CDE-2026-01-7894</div>
+            </div>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <div class="footer-left">Issued: 15 January 2026 &nbsp;·&nbsp; Valid: 2 Years &nbsp;·&nbsp; learn.microsoft.com/verify &nbsp;·&nbsp; ID: MS-CDE-2026-01-7894</div>
+          <div class="footer-right"><div class="footer-dot fd-r"></div><div class="footer-dot fd-g"></div><div class="footer-dot fd-b"></div><div class="footer-dot fd-y"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CERT 5 — Data Science & AI
+════════════════════════════════════════════ -->
+<div class="cert-page" id="c5">
+<div class="cert t5">
+  <div class="cert-frame">
+    <div class="cert-paper">
+      <div class="holo-strip"></div>
+      <div class="cert-inner">
+        <svg class="filigree tl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#16a34a" stroke-width="1.5" fill="none"/><path d="M4 52L4 4L52 4" stroke="#4ade80" stroke-width="0.6" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3.5" fill="#16a34a"/><path d="M18 4L4 4L4 18" stroke="#4ade80" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree tr" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#16a34a" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#16a34a"/><path d="M18 4L4 4L4 18" stroke="#4ade80" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree bl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#16a34a" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#16a34a"/><path d="M18 4L4 4L4 18" stroke="#4ade80" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree br" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#16a34a" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#16a34a"/><path d="M18 4L4 4L4 18" stroke="#4ade80" stroke-width="2" fill="none"/></svg>
+        <div class="cert-header">
+          <div class="org-left">
+            <div class="ms-grid"><span class="r"></span><span class="g"></span><span class="b"></span><span class="y"></span></div>
+            <div class="org-text"><div class="org-name">Microsoft</div><div class="org-division">AI &amp; Data Certification Program</div></div>
+          </div>
+          <div class="cert-number">Certification No.<br>MS-DSA-2026-01-7895<br>Issued: 15 January 2026</div>
+        </div>
+        <div class="rule-gold"></div>
+        <div class="body-grid">
+          <div>
+            <div class="cert-type-line">Certificate of Professional Completion</div>
+            <div class="cert-heading">Data Science<br><span class="hl">&amp; Artificial Intelligence</span></div>
+            <div class="cert-subheading">Microsoft Azure AI — Machine Learning Track</div>
+            <div class="awarded-row">This certificate is proudly awarded to</div>
+            <div class="recipient">Subhajit Sarkar</div>
+            <p class="cert-desc">For demonstrating mastery of data science methodologies, machine learning model development, deep learning architectures, natural language processing, and deployment of AI systems using Microsoft Azure AI services and industry-leading frameworks.</p>
+            <div class="skills-heading">Validated Competencies</div>
+            <div class="skills-row">
+              <span class="stag">Machine Learning</span><span class="stag">TensorFlow</span>
+              <span class="stag">PyTorch</span><span class="stag">NLP</span>
+              <span class="stag">Azure AI</span><span class="stag">LLM APIs</span>
+              <span class="stag">Data Visualisation</span><span class="stag">Power BI</span>
+              <span class="stag">Generative AI</span><span class="stag">MLOps</span>
+            </div>
+            <div class="sig-row">
+              <div class="sig-block"><div class="sig-name">Satya Nadella</div><div class="sig-underline"></div><div class="sig-title">Chief Executive Officer · Microsoft Corporation</div></div>
+              <div class="sig-block"><div class="sig-name">Eric Boyd</div><div class="sig-underline"></div><div class="sig-title">CVP · Azure AI · Microsoft</div></div>
+            </div>
+          </div>
+          <div class="right-panel">
+            <div class="medallion">
+              <svg viewBox="0 0 150 150" fill="none">
+                <defs><radialGradient id="mg5" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#15803d"/><stop offset="100%" stop-color="#052e16"/></radialGradient></defs>
+                <circle cx="75" cy="75" r="68" stroke="#16a34a" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.35"/>
+                <circle cx="75" cy="75" r="56" fill="url(#mg5)"/>
+                <circle cx="75" cy="75" r="56" stroke="#4ade80" stroke-width="1.5" fill="none"/>
+                <circle cx="75" cy="75" r="48" stroke="rgba(74,222,128,0.2)" stroke-width="0.8" fill="none"/>
+                <!-- neural net -->
+                <circle cx="75" cy="58" r="5" stroke="#4ade80" stroke-width="1.2" fill="rgba(74,222,128,0.15)"/>
+                <circle cx="58" cy="75" r="5" stroke="#4ade80" stroke-width="1.2" fill="rgba(74,222,128,0.15)"/>
+                <circle cx="92" cy="75" r="5" stroke="#4ade80" stroke-width="1.2" fill="rgba(74,222,128,0.15)"/>
+                <circle cx="75" cy="92" r="5" stroke="#4ade80" stroke-width="1.2" fill="rgba(74,222,128,0.15)"/>
+                <line x1="75" y1="63" x2="75" y2="87" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+                <line x1="63" y1="75" x2="87" y2="75" stroke="#4ade80" stroke-width="0.8" opacity="0.5"/>
+                <line x1="62" y1="62" x2="88" y2="88" stroke="#4ade80" stroke-width="0.5" opacity="0.3"/>
+                <text x="75" y="110" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="7" fill="#4ade80" letter-spacing="2">DATA SCI / AI</text>
+                <circle cx="75" cy="22" r="3" fill="#4ade80"/><circle cx="75" cy="128" r="3" fill="#4ade80"/>
+                <circle cx="22" cy="75" r="3" fill="#4ade80"/><circle cx="128" cy="75" r="3" fill="#4ade80"/>
+              </svg>
+            </div>
+            <div class="info-card"><div class="ic-label">Exam Score</div><div class="ic-value">96%</div><div class="ic-sub">Pass Threshold: 70%</div></div>
+            <div class="seal-card">
+              <svg class="seal-svg" viewBox="0 0 68 68" fill="none">
+                <circle cx="34" cy="34" r="32" stroke="#16a34a" stroke-width="1.2"/>
+                <circle cx="34" cy="34" r="26" stroke="rgba(22,163,74,0.35)" stroke-width="0.7" stroke-dasharray="3 2"/>
+                <text x="34" y="30" text-anchor="middle" font-family="Cinzel" font-size="5.5" fill="#4ade80" letter-spacing="1.5">MICROSOFT</text>
+                <text x="34" y="39" text-anchor="middle" font-family="Cinzel" font-size="5" fill="#4ade80" letter-spacing="1">CERTIFIED</text>
+                <text x="34" y="47" text-anchor="middle" font-family="DM Sans" font-size="4" fill="#666" letter-spacing="0.5">JAN 2026</text>
+              </svg>
+              <div class="seal-id">MS-DSA-2026-01-7895</div>
+            </div>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <div class="footer-left">Issued: 15 January 2026 &nbsp;·&nbsp; Valid: 2 Years &nbsp;·&nbsp; learn.microsoft.com/verify &nbsp;·&nbsp; ID: MS-DSA-2026-01-7895</div>
+          <div class="footer-right"><div class="footer-dot fd-r"></div><div class="footer-dot fd-g"></div><div class="footer-dot fd-b"></div><div class="footer-dot fd-y"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CERT 6 — Mobile App Developer
+════════════════════════════════════════════ -->
+<div class="cert-page" id="c6">
+<div class="cert t6">
+  <div class="cert-frame">
+    <div class="cert-paper">
+      <div class="holo-strip"></div>
+      <div class="cert-inner">
+        <svg class="filigree tl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#d97706" stroke-width="1.5" fill="none"/><path d="M4 52L4 4L52 4" stroke="#fbbf24" stroke-width="0.6" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3.5" fill="#d97706"/><path d="M18 4L4 4L4 18" stroke="#fbbf24" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree tr" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#d97706" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#d97706"/><path d="M18 4L4 4L4 18" stroke="#fbbf24" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree bl" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#d97706" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#d97706"/><path d="M18 4L4 4L4 18" stroke="#fbbf24" stroke-width="2" fill="none"/></svg>
+        <svg class="filigree br" viewBox="0 0 72 72" fill="none"><path d="M4 68L4 4L68 4" stroke="#d97706" stroke-width="1.5" fill="none"/><circle cx="4" cy="4" r="3.5" fill="#d97706"/><path d="M18 4L4 4L4 18" stroke="#fbbf24" stroke-width="2" fill="none"/></svg>
+        <div class="cert-header">
+          <div class="org-left">
+            <div class="ms-grid"><span class="r"></span><span class="g"></span><span class="b"></span><span class="y"></span></div>
+            <div class="org-text"><div class="org-name">Microsoft</div><div class="org-division">Learn Certification Program</div></div>
+          </div>
+          <div class="cert-number">Certification No.<br>MS-MAD-2026-01-7896<br>Issued: 15 January 2026</div>
+        </div>
+        <div class="rule-gold"></div>
+        <div class="body-grid">
+          <div>
+            <div class="cert-type-line">Certificate of Professional Completion</div>
+            <div class="cert-heading">Mobile App<br><span class="hl">Developer</span></div>
+            <div class="cert-subheading">Microsoft Applied Skills — Cross-Platform Mobile Track</div>
+            <div class="awarded-row">This certificate is proudly awarded to</div>
+            <div class="recipient">Subhajit Sarkar</div>
+            <p class="cert-desc">For demonstrating professional expertise in cross-platform mobile application development, including native Android and iOS engineering, React Native, Flutter, cloud-backed services, push notifications, and end-to-end app store deployment.</p>
+            <div class="skills-heading">Validated Competencies</div>
+            <div class="skills-row">
+              <span class="stag">React Native</span><span class="stag">Flutter</span>
+              <span class="stag">Android SDK</span><span class="stag">iOS Swift</span>
+              <span class="stag">Firebase</span><span class="stag">Push Notifications</span>
+              <span class="stag">App Store Deploy</span><span class="stag">REST / GraphQL</span>
+              <span class="stag">SQLite</span><span class="stag">Expo</span>
+            </div>
+            <div class="sig-row">
+              <div class="sig-block"><div class="sig-name">Satya Nadella</div><div class="sig-underline"></div><div class="sig-title">Chief Executive Officer · Microsoft Corporation</div></div>
+              <div class="sig-block"><div class="sig-name">Scott Guthrie</div><div class="sig-underline"></div><div class="sig-title">Executive VP · Cloud &amp; AI · Microsoft</div></div>
+            </div>
+          </div>
+          <div class="right-panel">
+            <div class="medallion">
+              <svg viewBox="0 0 150 150" fill="none">
+                <defs><radialGradient id="mg6" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#b45309"/><stop offset="100%" stop-color="#431407"/></radialGradient></defs>
+                <circle cx="75" cy="75" r="68" stroke="#d97706" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.35"/>
+                <circle cx="75" cy="75" r="56" fill="url(#mg6)"/>
+                <circle cx="75" cy="75" r="56" stroke="#fbbf24" stroke-width="1.5" fill="none"/>
+                <circle cx="75" cy="75" r="48" stroke="rgba(251,191,36,0.2)" stroke-width="0.8" fill="none"/>
+                <rect x="60" y="50" width="30" height="46" rx="4" stroke="#fbbf24" stroke-width="1.5" fill="rgba(251,191,36,0.08)"/>
+                <line x1="60" y1="58" x2="90" y2="58" stroke="#fbbf24" stroke-width="0.8"/>
+                <line x1="60" y1="88" x2="90" y2="88" stroke="#fbbf24" stroke-width="0.8"/>
+                <circle cx="75" cy="93" r="2.5" fill="#fbbf24"/>
+                <text x="75" y="110" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="7" fill="#fbbf24" letter-spacing="2">MOBILE</text>
+                <text x="75" y="120" text-anchor="middle" font-family="Cinzel" font-size="6" fill="rgba(251,191,36,0.5)" letter-spacing="1.5">DEVELOPER</text>
+                <circle cx="75" cy="22" r="3" fill="#fbbf24"/><circle cx="75" cy="128" r="3" fill="#fbbf24"/>
+                <circle cx="22" cy="75" r="3" fill="#fbbf24"/><circle cx="128" cy="75" r="3" fill="#fbbf24"/>
+              </svg>
+            </div>
+            <div class="info-card"><div class="ic-label">Exam Score</div><div class="ic-value">90%</div><div class="ic-sub">Pass Threshold: 70%</div></div>
+            <div class="seal-card">
+              <svg class="seal-svg" viewBox="0 0 68 68" fill="none">
+                <circle cx="34" cy="34" r="32" stroke="#d97706" stroke-width="1.2"/>
+                <circle cx="34" cy="34" r="26" stroke="rgba(217,119,6,0.35)" stroke-width="0.7" stroke-dasharray="3 2"/>
+                <text x="34" y="30" text-anchor="middle" font-family="Cinzel" font-size="5.5" fill="#b45309" letter-spacing="1.5">MICROSOFT</text>
+                <text x="34" y="39" text-anchor="middle" font-family="Cinzel" font-size="5" fill="#fbbf24" letter-spacing="1">CERTIFIED</text>
+                <text x="34" y="47" text-anchor="middle" font-family="DM Sans" font-size="4" fill="#666" letter-spacing="0.5">JAN 2026</text>
+              </svg>
+              <div class="seal-id">MS-MAD-2026-01-7896</div>
+            </div>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <div class="footer-left">Issued: 15 January 2026 &nbsp;·&nbsp; Valid: 2 Years &nbsp;·&nbsp; learn.microsoft.com/verify &nbsp;·&nbsp; ID: MS-MAD-2026-01-7896</div>
+          <div class="footer-right"><div class="footer-dot fd-r"></div><div class="footer-dot fd-g"></div><div class="footer-dot fd-b"></div><div class="footer-dot fd-y"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
