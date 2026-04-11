@@ -175,6 +175,118 @@ h1.hero-name span{
   display:flex;gap:1rem;flex-wrap:wrap;
   animation:fadeUp .6s .4s ease both;
 }
+/* HERO LAYOUT - 3 Column */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  position: relative;
+  padding-top: 5rem;
+}
+
+/* LEFT - Terminal Card */
+.hero-left { display: flex; justify-content: center; opacity: 1 !important; transform: none !important; }
+.terminal-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  font-family: 'Space Mono', monospace;
+  font-size: .8rem;
+  box-shadow: 0 0 30px rgba(0,229,255,.05);
+}
+.terminal-bar {
+  background: #1a2332;
+  padding: .6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  border-bottom: 1px solid var(--border);
+}
+.t-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.t-dot.red    { background: #ff5f57; }
+.t-dot.yellow { background: #febc2e; }
+.t-dot.green  { background: #28c840; }
+.t-title {
+  color: var(--muted);
+  font-size: .7rem;
+  margin-left: .5rem;
+}
+.terminal-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  line-height: 1.6;
+}
+.t-prompt { color: var(--accent); margin-right: .4rem; }
+.t-out { color: var(--text); padding-left: 1rem; }
+.t-green { color: var(--green) !important; }
+.blink {
+  animation: blink 1s step-end infinite;
+  color: var(--accent);
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* RIGHT - Photo Card */
+.hero-right { display: flex; justify-content: center; opacity: 1 !important; transform: none !important; }
+.hero-photo-card {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+}
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  display: block;
+  filter: grayscale(20%);
+  transition: filter .3s;
+}
+.hero-photo:hover { filter: grayscale(0%); }
+.hero-photo-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 6px;
+  z-index: -1;
+  opacity: .4;
+}
+.hero-photo-badge {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero-layout {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  .hero-left  { grid-column: 1; grid-row: 2; }
+  .hero-content { grid-column: 1 / -1; grid-row: 1; }
+  .hero-right { grid-column: 2; grid-row: 2; }
+}
+
+@media (max-width: 768px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+  .hero-left, .hero-right { display: none; }
+}
 .btn-primary{
   display:inline-flex;align-items:center;gap:.5rem;
   background:var(--accent);color:#080c14;
@@ -567,24 +679,66 @@ footer{
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
-  <div class="hero-content">
-    <div class="hero-tag">Available for remote opportunities</div>
-    <h1 class="hero-name">Subhajit<br><span>Sarkar.</span></h1>
-    <div class="hero-roles">
-      <span class="hero-role-tag">Python Developer</span>
-      <span class="hero-role-tag">Full Stack Web Developer</span>
-      <span class="hero-role-tag">Documentation Engineer</span>
+
+  <div class="hero-layout">
+
+    <!-- LEFT: Terminal Card -->
+    <div class="hero-left reveal">
+      <div class="terminal-card">
+        <div class="terminal-bar">
+          <span class="t-dot red"></span>
+          <span class="t-dot yellow"></span>
+          <span class="t-dot green"></span>
+          <span class="t-title">subhajit.sh</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="t-prompt">$</span> whoami</p>
+          <p class="t-out">Subhajit Sarkar</p>
+          <p><span class="t-prompt">$</span> location</p>
+          <p class="t-out">Hailakandi, Assam 🇮🇳</p>
+          <p><span class="t-prompt">$</span> role</p>
+          <p class="t-out">Python Dev & Full Stack</p>
+          <p><span class="t-prompt">$</span> status</p>
+          <p class="t-out t-green">Open to Remote Work ●</p>
+          <p><span class="t-prompt">$</span> passion</p>
+          <p class="t-out">Cybersecurity & AI</p>
+          <p class="t-cursor"><span class="t-prompt">$</span> <span class="blink">_</span></p>
+        </div>
+      </div>
     </div>
-    <p class="hero-desc">Aspiring developer & documentation engineer building scalable solutions and developer-friendly interfaces. CSE diploma student from Assam, India — passionate about Python, web technologies, and cybersecurity.</p>
-    <div class="hero-btns">
-      <a href="#projects" class="btn-primary">View Projects →</a>
-      <a href="#contact" class="btn-outline">Get In Touch</a>
+
+    <!-- CENTER: Hero Content -->
+    <div class="hero-content">
+      <div class="hero-tag">Available for remote opportunities</div>
+      <h1 class="hero-name">Subhajit<br><span>Sarkar.</span></h1>
+      <div class="hero-roles">
+        <span class="hero-role-tag">Python Developer</span>
+        <span class="hero-role-tag">Full Stack Web Developer</span>
+        <span class="hero-role-tag">Documentation Engineer</span>
+      </div>
+      <p class="hero-desc">Aspiring developer & documentation engineer building scalable solutions and developer-friendly interfaces. CSE diploma student from Assam, India — passionate about Python, web technologies, and cybersecurity.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View Projects →</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-social">
+        <a href="https://github.com/OSubhajit" target="_blank" class="social-link">GH</a>
+        <a href="https://osubhajit.hashnode.dev/" target="_blank" class="social-link">Bg</a>
+        <a href="https://www.instagram.com/osubhajit_?igsh=OXA1NW8yZmt4MnIx&utm_source=qr" target="_blank" class="social-link">IG</a>
+      </div>
     </div>
-    <div class="hero-social">
-      <a href="https://github.com/OSubhajit" target="_blank" class="social-link">GH</a>
-      <a href="https://osubhajit.hashnode.dev/" target="_blank" class="social-link">Bg</a>
-      <a href="https://www.instagram.com/osubhajit_?igsh=OXA1NW8yZmt4MnIx&utm_source=qr" target="_blank" class="social-link">IG</a>
+
+    <!-- RIGHT: Photo -->
+    <div class="hero-right reveal">
+      <div class="hero-photo-card">
+        <img src="assets/profile.png" alt="Subhajit Sarkar" class="hero-photo"/>
+        <div class="hero-photo-badge">
+          <br>
+          <span class="badge-open">● Available Now</span>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
